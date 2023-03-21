@@ -1,0 +1,69 @@
+<div class="layout">
+    <div class="row">
+        <div class="col-3">
+            <div class="wrapper">
+                <nav id="sidebar">
+                    <div class="sidebar-header">
+                        <h1>Dobox</h1>
+                    </div>
+            
+                    <li class="workspace">
+                        <i class="icon-box" >
+                            <img class="icon" src="../../../../assets/images/chat.png" alt="">
+                        </i>
+                        GCEO Workspace
+                    </li>
+
+                    <li class="Platform">
+                        <i class="icon-box" >
+                            <img class="icon" src="../../../../assets/images/chat.png" alt="">
+                        </i>
+                        Platform
+                    </li>
+                    <ul class="navigations">
+                        <li>
+                            <i><p>C</p></i>
+                            <a>Chat</a>
+                        </li>
+
+                        <li>
+                            <i><p>I</p></i>
+                            <a >Inbox</a>
+                        </li>
+
+                        <li>
+                            <i><p>C</p></i>
+                            <a routerLink="platform">HUB Road Map</a>
+                        </li>
+
+                        <li  routerLink="platform">
+                            <i><p>D</p></i>
+                            <a>Dobox</a>
+
+                            
+                        </li>
+                        <li>
+                            <i><p>S</p></i>
+                            <a >stc Profile</a>
+                        </li>
+                        <li>
+                            <i><p>M</p></i>
+                            <a>Meeting</a>
+                        </li>
+                    </ul>
+            
+
+                </nav>
+            
+            
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="content-section" >
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+
+
+</div>

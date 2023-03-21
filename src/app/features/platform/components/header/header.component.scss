@@ -1,0 +1,39 @@
+
+@import '/src/assets/styles/abstructs/varibles';
+.conatainer{
+    background-color: $white;
+    padding: 3rem;
+    h1 {
+        font-weight: 500;
+        font-size: xx-large;
+      }
+      #items {
+        li {
+            display: inline-block;
+            font-size: 1rem;
+            height: 3.5rem;
+            font-size: 1.5rem;
+            color: $dark-gray;
+            list-style-type: none;
+            padding: 0 1.5rem;
+            &:not(:last-child) {
+                margin-right: 1rem;
+            }
+            &:not(:last-child) {
+                border-right:$dark-gray solid .2rem;
+            }
+            &:hover {
+                background-color:  $gray;
+                color:  $primary;
+                border-left: $primary .4rem solid;
+            }
+        }
+    }
+  }
+
+
+
+
+
+
+

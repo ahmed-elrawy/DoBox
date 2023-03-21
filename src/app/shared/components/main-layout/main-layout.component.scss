@@ -1,0 +1,25 @@
+@import '/src/assets/styles/abstructs/varibles';
+
+.mat-toolbar{ background-color:  $white; }
+.mat-drawer-container { background-color: $gray;}
+.sidenav-containe {
+    height: 100%;
+    width: 100%;
+    .sidenav {
+      user-select: none;
+      background-color: $primary;
+      transform: none;
+    }
+    .sidenav-content {
+      height: 100%;
+      margin: 1.5rem;
+      background-color: $gray;
+    }
+    .icon {
+      width: 3rem;
+    }
+  }
+
+ 
+
+
