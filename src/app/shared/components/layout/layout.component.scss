@@ -35,14 +35,12 @@
                 .Platform{
                     //($bg,$color)
                     @include workspace($primary, $grey);
-    
-                }
-                .Platform{
                     .icon-box {
                         //(bg)
                         @include icon-box($primary);
                     }
                 }
+   
                 ul.navigations {
                     display: flex;
                     flex-direction: column; 

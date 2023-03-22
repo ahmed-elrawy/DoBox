@@ -3,15 +3,49 @@
         <h1>title {{id}}</h1>
         <p>Manage all the tasks in your platform</p>
     </div>
-    <div class="row">
-        <ul id='items'>
-            <li class="item"  routerLink="{{id}}/kanban"   [routerLinkActive]="['active']"><p>Kanban</p></li>
-            <div class="wall"></div>
-            <li class="item" routerLink="{{id}}/table" [routerLinkActive]="['active']"><p>Main Table</p></li>
-            <div class="wall"></div>
-            <li class="item" routerLink="{{id}}/dashboard" [routerLinkActive]="['active']"><p>Dashboard</p></li>
-          </ul>
+    <div class="row position-relative">
+        <div class="col-7">
+            <ul id='items'>
+                <li class="item" routerLink="{{id}}/kanban" [routerLinkActive]="['active']">
+                    <div class="wall2"></div>
+                    <p>Kanban</p>
+                </li>
+                <div class="wall"></div>
+                <li class="item" routerLink="{{id}}/table" [routerLinkActive]="['active']">
+                    <div class="wall2"></div>
+                    <p>Main Table</p>
+                </li>
+                <div class="wall"></div>
+                <li class="item" routerLink="{{id}}/dashboard" [routerLinkActive]="['active']">
+                    <div class="wall2"></div>
+                    <p>Dashboard</p>
+
+                </li>
+
+            </ul>
+        </div>
+        <div class="col-5">
+            <button class="btn">+</button>
+            <div class="d-flex justify-content-center px-5">
+                <div class="search"> <input type="text" class="search-input" placeholder="search all tasks" name=""> <a
+                    href="#" class="search-icon"> <img src="../../../../../assets/images/inbox.png" alt=""></a> </div>
+            </div>
+            <div class="users ">
+                <img src="../../../../../assets/images/R.jfif" alt="profile">
+                <img src="../../../../../assets/images/R.jfif" alt="profile">
+                <img src="../../../../../assets/images/R.jfif" alt="profile">
+                <div class="patch"><p>+4</p></div>
+                <div class="Platform">
+                    <p>Add member +</p>
+                </div>
+            </div>
+
+        
+
+
+        </div>
+
+
     </div>
 </div>
 <router-outlet></router-outlet>
-

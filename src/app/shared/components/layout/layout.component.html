@@ -1,6 +1,6 @@
 <div class="layout">
     <div class="row">
-        <div class="col-3">
+        <div class="col-2 " style="width: 20%;">
             <div class="wrapper">
                 <nav id="sidebar">
                     <div class="sidebar-header">
@@ -12,7 +12,6 @@
                         </i>
                         GCEO Workspace
                     </li>
-
                     <li class="Platform">
                         <i class="icon-box" >
                             <img class="icon" src="../../../../assets/images/chat.png" alt="">
@@ -20,24 +19,18 @@
                         Platform
                     </li>
                     <ul class="navigations">
-
                         <li  *ngFor="let n of navigationList">
                             <i><p>{{n.icon}}</p></i>
-
                             <a routerLink= "{{n.id}}">{{n.name}}</a>
-
-                            <!-- <a routerLink="/{{n.route}}">{{n.name}}</a> -->
                         </li>
                     </ul>
                 </nav>
             </div>
         </div>
-        <div class="col-9">
+        <div class="col-10" style="width: 80%;">
             <div class="content-section" >
                 <router-outlet></router-outlet>
             </div>
         </div>
     </div>
-
-
 </div>

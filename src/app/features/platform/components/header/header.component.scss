@@ -1,5 +1,6 @@
 
 @import '/src/assets/styles/abstructs/varibles';
+@import '/src/assets/styles/abstructs/mixins';
 .conatainer{
     background-color: $white;
     padding: 3rem;
@@ -16,7 +17,7 @@
             font-size: 1rem;
             height: 4.5rem;
             font-size: 1.5rem;
-            color: $dark-grey;
+            color: $dark;
             padding-left: 3rem;
             border-radius: .4rem;
             width: 13rem;
@@ -31,7 +32,17 @@
         li:active, li:hover, .active {
             background-color:  $grey;
             color:  $primary;
-            border-left: $primary .4rem solid;
+            // border-left: $primary .4rem solid;
+            .wall2{
+                position: absolute;
+                top: -0.5rem;
+                right: 11.3rem;
+                margin: 0 1rem;
+                display: inline-block;
+                width: .5rem;
+                height: 5rem;
+                background-color:$primary;
+              }
         }
         .wall{
             position: absolute;
@@ -42,8 +53,117 @@
             height: 3rem;
             background-color:$grey;
           }
+    
+        
         
         
         
     }
-  }
+    .users{
+        transform: translateX(18rem);
+        display: flex;
+        img {    
+            width: 5rem;
+            height: 5rem;
+            border-radius: 50%;
+            &:nth-child(2){
+                transform: translateX(-2.2rem);
+            }
+            &:nth-child(3){
+                transform: translateX(-4.5rem);
+            }
+    
+          }
+          .patch {
+            transform: translateX(-6.5rem);
+            font-size: large;
+            font-weight: 500;
+            width: 4.4rem;
+            height: 4.4rem;
+            border-radius: 50%;
+            background-color:$grey;
+            text-align: center;
+            text-justify:  space-around;
+            p{
+                transform: translateY(1.3rem);
+            }
+        }  
+      } 
+    .Platform{
+        height: 5rem;
+        width: 15rem;
+        border-radius: .4rem;
+        display: flex;
+        background: $primary;
+        color:  $white;
+        font-size: medium;
+        font-weight: 500;
+        align-items: center;
+        p {
+            margin: auto;
+        }
+    }
+    .btn {
+        position: absolute;
+        right: 88rem;
+        background: $grey;
+        font-size: 2rem;
+        color:$dark;
+        width: 3rem;
+        height: 3rem;
+      }
+    .search {
+        position: absolute;
+        width: 24%;
+        top: -2.1rem;
+        transform: translateX(-33rem);
+        margin-bottom: auto;
+        margin-top: 20px;
+        height: 43px;
+        background-color: #F3F3F3;
+        padding: 10px;
+        border-radius: 5px;
+        
+        .search-input {
+            color: $white;
+            border: 0;
+            outline: 0;
+            background: none;
+            width: 0;
+            margin-top: 5px;
+            caret-color: transparent;
+            line-height: 20px;
+            transition: width 0.4s linear
+        }
+
+        .search-input {
+            padding: 0 10px;
+            width: 100%;
+            caret-color: $primary;
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: $dark;
+            transition: width 0.4s linear;
+        }
+
+        .search-icon {
+            height: 34px;
+            width: 34px;
+            float: right;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1rem;
+            bottom: 30px;
+            position: relative;
+            border-radius: .5rem;
+        }
+    }
+
+}
+
+
+
+
+ 
