@@ -1,15 +1,15 @@
 <div class="conatainer">
     <div class="row">
-        <h1>HUB Road Map</h1>
+        <h1>title {{id}}</h1>
         <p>Manage all the tasks in your platform</p>
     </div>
     <div class="row">
         <ul id='items'>
-            <li class="item" routerLink="kanban" [routerLinkActive]="['active']"><p>Kanban</p></li>
+            <li class="item"  routerLink="{{id}}/kanban"   [routerLinkActive]="['active']"><p>Kanban</p></li>
             <div class="wall"></div>
-            <li class="item" routerLink="/platform/table" [routerLinkActive]="['active']"><p>Main Table</p></li>
+            <li class="item" routerLink="{{id}}/table" [routerLinkActive]="['active']"><p>Main Table</p></li>
             <div class="wall"></div>
-            <li class="item" routerLink="/platform/dashboard" [routerLinkActive]="['active']"><p>Dashboard</p></li>
+            <li class="item" routerLink="{{id}}/dashboard" [routerLinkActive]="['active']"><p>Dashboard</p></li>
           </ul>
     </div>
 </div>

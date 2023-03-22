@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from '@app/shared/components/layout/layout.component';
 import { HeaderComponent } from './components/header/header.component';
+import { PlatformComponent } from './platform.component';
 
 let children: Routes;
 children = [
@@ -11,29 +12,27 @@ children = [
     component : HeaderComponent ,
     children: [
       {
-        path: '',
-        redirectTo: 'kanban',
-        pathMatch: 'full',
+        path: ':id',
+        component:PlatformComponent
       },
       {
-        path: 'kanban',
+        path: ':id/kanban',
         loadChildren: () =>
         import('./views/kanban/kanban.module').then((m) => m.KanbanModule),
       },
       {
-        path: 'dashboard',
+        path: ':id/dashboard',
         loadChildren: () =>
         import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule),
       },
-    
       {
-        path: 'gantt-chart',
+        path: ':id/gantt-chart',
         loadChildren: () =>
         import('./views/gantt-chart/gantt-chart.module').then((m) => m.GanttChartModule),
       },
     
       {
-        path: 'table',
+        path: ':id/table',
         loadChildren: () =>
         import('./views/table/table.module').then((m) => m.TableModule),
       },

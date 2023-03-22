@@ -23,7 +23,10 @@
 
                         <li  *ngFor="let n of navigationList">
                             <i><p>{{n.icon}}</p></i>
-                            <a routerLink="/{{n.route}}">{{n.name}}</a>
+
+                            <a routerLink= "{{n.id}}">{{n.name}}</a>
+
+                            <!-- <a routerLink="/{{n.route}}">{{n.name}}</a> -->
                         </li>
                     </ul>
                 </nav>
