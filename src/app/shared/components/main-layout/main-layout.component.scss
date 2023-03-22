@@ -1,7 +1,15 @@
 @import '/src/assets/styles/abstructs/varibles';
 
-.mat-toolbar{ background-color:  $white; }
+.mat-toolbar{
+  display: flex;
+  justify-content: space-between;
+  background-color:  $white;
+ }
+
 .mat-drawer-container { background-color: $grey;}
+
+.mdc-button__label{ float: right !important;}
+
 .sidenav-containe {
     height: 100%;
     width: 100%;
@@ -11,15 +19,12 @@
       transform: none;
     }
     .sidenav-content {
-      height: 100%;
+      height: 95%;
       margin: 1.5rem;
       background-color: $grey;
+      
     }
     .icon {
       width: 3rem;
     }
   }
-
- 
-
-
