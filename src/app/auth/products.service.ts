@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable,of } from 'rxjs';
-import { Product } from '@app/core/models/products';
+import { Product } from '@app/core/models/navigation-list';
 import {environment as env} from '../../../environments/environment';
 import { PRODUCTS_DATA } from 'assets/fake-api';
 

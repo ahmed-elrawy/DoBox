@@ -8,32 +8,42 @@
         font-size: xx-large;
       }
       #items {
+        position: relative;
+
         li {
+            position: relative;
             display: inline-block;
             font-size: 1rem;
-            height: 3.5rem;
+            height: 4.5rem;
             font-size: 1.5rem;
-            color: $dark-gray;
-            list-style-type: none;
-            padding: 0 1.5rem;
+            color: $dark-grey;
+            padding-left: 3rem;
+            border-radius: .4rem;
+            width: 13rem;
+            p{
+                position: absolute;
+                top: 1rem;
+            }
             &:not(:last-child) {
                 margin-right: 1rem;
             }
-            &:not(:last-child) {
-                border-right:$dark-gray solid .2rem;
-            }
-            &:hover {
-                background-color:  $gray;
-                color:  $primary;
-                border-left: $primary .4rem solid;
-            }
         }
+        li:active, li:hover, .active {
+            background-color:  $grey;
+            color:  $primary;
+            border-left: $primary .4rem solid;
+        }
+        .wall{
+            position: absolute;
+            top: 1rem;
+            margin: 0 1rem;
+            display: inline-block;
+            width: .2rem;
+            height: 3rem;
+            background-color:$grey;
+          }
+        
+        
+        
     }
   }
-
-
-
-
-
-
-

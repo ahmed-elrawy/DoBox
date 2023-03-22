@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from '@app/shared/components/layout/layout.component';
-import { NotFoundComponent } from '@app/shared/components/not-found/not-found.component';
 import { HeaderComponent } from './components/header/header.component';
 
 let children: Routes;
@@ -13,11 +12,11 @@ children = [
     children: [
       {
         path: '',
-        redirectTo: 'Kanban',
+        redirectTo: 'kanban',
         pathMatch: 'full',
       },
       {
-        path: 'Kanban',
+        path: 'kanban',
         loadChildren: () =>
         import('./views/kanban/kanban.module').then((m) => m.KanbanModule),
       },

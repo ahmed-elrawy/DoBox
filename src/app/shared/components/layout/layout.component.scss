@@ -27,14 +27,14 @@
         
                 .workspace {
                     // ($bg,$color)
-                    @include workspace( $gray,$primary);
+                    @include workspace( $grey,$primary);
                     .icon-box {
                         @include icon-box( $primary);
                     }
                 }
                 .Platform{
                     //($bg,$color)
-                    @include workspace($primary, $gray);
+                    @include workspace($primary, $grey);
     
                 }
                 .Platform{
@@ -51,7 +51,7 @@
                     margin: 1rem;
                     color:$dark;
                     font-size: medium;
-                    background-color: $gray;
+                    background-color: $grey;
                     li a {
                         padding: 1rem;
                     }
@@ -59,7 +59,7 @@
                         display: flex;
                         &:hover {
                             color:  $primary;
-                            background: $dark-gray;
+                            background: $dark-grey;
                         }
                         
                     }

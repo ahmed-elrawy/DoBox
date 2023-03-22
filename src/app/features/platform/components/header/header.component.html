@@ -5,9 +5,11 @@
     </div>
     <div class="row">
         <ul id='items'>
-            <li class="item" routerLink="/platform/Kanban">Kanban</li>
-            <li class="item" routerLink="/platform/table">Main Table</li>
-            <li class="item" routerLink="/platform/dashboard">Dashboard</li>
+            <li class="item" routerLink="kanban" [routerLinkActive]="['active']"><p>Kanban</p></li>
+            <div class="wall"></div>
+            <li class="item" routerLink="/platform/table" [routerLinkActive]="['active']"><p>Main Table</p></li>
+            <div class="wall"></div>
+            <li class="item" routerLink="/platform/dashboard" [routerLinkActive]="['active']"><p>Dashboard</p></li>
           </ul>
     </div>
 </div>

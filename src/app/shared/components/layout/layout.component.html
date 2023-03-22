@@ -21,35 +21,12 @@
                         Platform
                     </li>
                     <ul class="navigations">
-                        <li>
-                            <i><p>C</p></i>
-                            <a>Chat</a>
-                        </li>
 
-                        <li>
-                            <i><p>I</p></i>
-                            <a >Inbox</a>
+                        <li  *ngFor="let n of navigationList">
+                            <i><p>{{n.icon}}</p></i>
+                            <a routerLink="/{{n.route}}">{{n.name}}</a>
                         </li>
-
-                        <li>
-                            <i><p>C</p></i>
-                            <a routerLink="platform">HUB Road Map</a>
-                        </li>
-
-                        <li  routerLink="platform">
-                            <i><p>D</p></i>
-                            <a>Dobox</a>
-
-                            
-                        </li>
-                        <li>
-                            <i><p>S</p></i>
-                            <a >stc Profile</a>
-                        </li>
-                        <li>
-                            <i><p>M</p></i>
-                            <a>Meeting</a>
-                        </li>
+                      
                     </ul>
             
 
