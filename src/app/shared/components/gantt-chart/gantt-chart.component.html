@@ -1,0 +1,159 @@
+<!-- mat-elevation-z8 -->
+
+<div [ngClass]="'theme-' + this.theme" class="container  "> 
+  <div class="line" [ngStyle]="{left:line+'px'}"></div>
+    <div class="taskTableWrapper " #scrollOne id="timeline">
+      <div class="side-task-header"></div>
+      <div class="side-task-body">
+        <cdk-accordion class="example-accordion">
+          <cdk-accordion-item
+            *ngFor="let task of tasks; let index = index;"
+            #accordionItem="cdkAccordionItem"
+            class="example-accordion-item"
+            role="button"
+            tabindex="0"
+            [attr.id]="'accordion-header-' + index"
+            [attr.aria-expanded]="accordionItem.expanded"
+            [attr.aria-controls]="'accordion-body-' + index">
+            <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+              {{ task.label }}
+              <span class="example-accordion-item-description">
+                Click to {{ accordionItem.expanded ? 'close' : 'open' }}
+              </span>
+            </div>
+            <div
+              class="example-accordion-item-body"
+              role="region"
+              [style.display]="accordionItem.expanded ? '' : 'none'"
+              [attr.id]="'accordion-body-' + index"
+              [attr.aria-labelledby]="'accordion-header-' + index">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perferendis
+              excepturi incidunt ipsum deleniti labore, tempore non nam doloribus blanditiis
+              veritatis illo autem iure aliquid ullam rem tenetur deserunt velit culpa?
+            </div>
+          </cdk-accordion-item>
+          <!-- <cdk-accordion-item
+          *ngFor="let task of tasks; let index = index;"
+          #accordionItem="cdkAccordionItem"
+          class="example-accordion-item"
+          role="button"
+          tabindex="0"
+          [attr.id]="'accordion-header-' + index"
+          [attr.aria-expanded]="accordionItem.expanded"
+          [attr.aria-controls]="'accordion-body-' + index">
+          <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+            {{ index }}
+            <span class="example-accordion-item-description">
+              Click to {{ accordionItem.expanded ? 'close' : 'open' }}
+            </span>
+          </div>
+          <div
+            class="example-accordion-item-body"
+            role="region"
+            [style.display]="accordionItem.expanded ? '' : 'none'"
+            [attr.id]="'accordion-body-' + index"
+            [attr.aria-labelledby]="'accordion-header-' + index">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perferendis
+            excepturi incidunt ipsum deleniti labore, tempore non nam doloribus blanditiis
+            veritatis illo autem iure aliquid ullam rem tenetur deserunt velit culpa?
+          </div>
+        </cdk-accordion-item> -->
+        
+        </cdk-accordion>
+      </div>
+      <!-- <table class="taskTable">
+        <thead>
+          <tr>
+            <th>Label</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let task of tasks"
+            [ngClass]="{ parentTask: task.isParent, active: task.active }"
+            [hidden]="task.isHidden"
+            (click)="onTaskClick(task)"
+          >
+            <td>{{ task.label }}</td>
+            <td>{{ task.start }}</td>
+            <td>{{ task.end }}</td>
+            <td>{{ task.description }}</td>
+          </tr>
+
+     
+
+          
+        </tbody>
+      </table> -->
+    </div>
+    <div
+
+      id="timelineWrapper"
+      class="timelineWrapper"
+      (scroll)="scrollOne.scrollTop = scrollTwo.scrollTop ;scroll( scrollOne.scrollLeft)"
+      #scrollTwo
+    >
+      <table class="timeline" >
+     
+        <thead >
+          <tr >
+            <th *ngFor="let item of [].constructor(workingHours); let i = index">
+              <!-- {{ this.dayStartHour + i }}:00 -->
+              {{ dates[i] }}
+
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <div class="row" *ngFor="let task of tasks" [hidden]="task.isHidden" >
+            <div 
+              class="taskBar"
+              matTooltip="{{' task.tooltip '}}"
+              matTooltipClass="gantt-tooltip"
+              [ngStyle]="{
+                left: task.offset + 'px',
+                width: task.width + 'px',
+                'background-color': task.color
+
+              }"
+            >
+              <!-- <div *ngFor="let status of task.statusList;  let i = index" class="d-in" [ngStyle]="{
+                display: 'inline-block',
+                height:'100%',
+                width: (100)/task.statusList.length  + '%',
+                'background-color': status.color
+                
+              }"
+              >{{i}}</div> -->
+
+              <!-- <div  [ngStyle]="{
+                display: 'inline-block',
+                height:'100%',
+                width:  '100%',
+                'background-color': task.color
+              }"
+              ></div> -->
+          </div>
+            <!-- <span
+              *ngFor="let status of task.statusList"
+              class="statusBar"
+              [ngStyle]="{
+                left: status.offset + 'px',
+                width: status.width + 'px',
+                'background-color': status.color
+              }"
+              matTooltip="{{ status.tooltip }}"
+              matTooltipClass="gantt-tooltip"
+            ></span> -->
+
+          </div>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  

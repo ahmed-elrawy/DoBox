@@ -11,6 +11,10 @@ import { MatListModule,} from '@angular/material/list';
 import {MatTableModule} from '@angular/material/table';
 import {MatMenuModule} from '@angular/material/menu';
 
+import { MatTooltipModule } from "@angular/material/tooltip";
+import {CdkAccordionModule} from '@angular/cdk/accordion';
+
+
 
 const MATERIAL_MODULES = [
   MatToolbarModule,
@@ -22,8 +26,10 @@ const MATERIAL_MODULES = [
   MatSidenavModule,
   MatListModule,
   MatTableModule,
-  MatMenuModule
-];
+  MatMenuModule,
+  MatTooltipModule,
+  CdkAccordionModule
+ ];
 
 @NgModule({
   imports: [

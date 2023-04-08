@@ -25,11 +25,6 @@ children = [
         loadChildren: () =>
         import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule),
       },
-      {
-        path: ':id/gantt-chart',
-        loadChildren: () =>
-        import('./views/gantt-chart/gantt-chart.module').then((m) => m.GanttChartModule),
-      },
     
       {
         path: ':id/table',
