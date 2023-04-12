@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableComponent } from './Table.component';
 import { TableRoutingModule } from './table-routing.module';
+import { SharedModule } from '@app/shared/shared.module';
 
 
 
@@ -9,7 +10,8 @@ import { TableRoutingModule } from './table-routing.module';
   declarations: [TableComponent],
   imports: [
     CommonModule,
-    TableRoutingModule
+    TableRoutingModule,
+    SharedModule
   ]
 })
 export class TableModule { }

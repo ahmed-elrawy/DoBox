@@ -18,6 +18,7 @@ import { MaterialModule } from './material.module';
   declarations: [
     ...Shared.pipes,
     ...Shared.components,
+    ...Shared.directive
   ],
   exports: [
     CommonModule,
@@ -25,7 +26,9 @@ import { MaterialModule } from './material.module';
     FormsModule,
     MaterialModule,
     ...Shared.pipes,
-    ...Shared.components
+    ...Shared.components,
+    ...Shared.directive
+
   ]
 })
 export class SharedModule {

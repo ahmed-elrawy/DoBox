@@ -22,6 +22,7 @@
     .timelineWrapper {
       tr,
       .row {
+        
         // border-bottom: 1px solid rgba(0, 0, 0, 0.12);
         th:not(:last-child) {
           border-right: 1px solid #e0e0e0;
@@ -114,7 +115,7 @@
       margin-top: 10px;
       white-space: nowrap;
       position: relative;
-      height: 30px;
+      // height: 100px;
       th {
         display: inline-block;
         box-sizing: border-box;
@@ -217,9 +218,7 @@
   }
   
   .example-accordion-item-header {
-    display: flex;
-    align-content: center;
-    justify-content: space-between;
+      height: 0px;
   }
   
   .example-accordion-item-description {
@@ -265,5 +264,13 @@
 
     border-radius: 7px;
     height: 100%;
+  }
+
+  .example-accordion-item-header{
+    height: 40px;
+  }
+
+  .accordion-sub-item{
+    height: 25px !important;
   }
 
