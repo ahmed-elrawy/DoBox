@@ -1,17 +1,22 @@
-import { Directive, ElementRef, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { fromEvent } from 'rxjs';
-import { debounceTime, map,skip, takeUntil } from 'rxjs/operators';
+import { Directive, ElementRef, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Subscription, fromEvent } from 'rxjs';
 
 @Directive({
-    selector: '[appResizable]', // Attribute selector
+    selector: '[resize]', // Attribute selector
 })
-export class ResizableDirective implements OnInit {
-    @Input() resizableGrabWidth = 8;
+export class ResizableDirective implements OnInit, OnDestroy {
+    subscription$: Subscription = new Subscription();
+
+    @Input() resizableGrabWidth = 5;
+    @Input() direction = 'right'; // or left
     @Input() resizableMinWidth = 10;
-    @Input() currentSize = 0
-    @Output() updatedSize = new EventEmitter<number>();
+    @Output() updateSize = new EventEmitter<number>();
 
     dragging = false;
+
+    currentWidth =0
+    mousedountclientX = 0
+
 
     constructor(private el: ElementRef) {
         const self = this;
@@ -26,45 +31,18 @@ export class ResizableDirective implements OnInit {
             (document.body.style as any)['pointer-events'] = 'auto';
         }
 
-        const newWidth = (wid: number) => {
-            // let width= el.nativeElement.style.width.slice(0, -1);
-            const newWidth = Math.max(this.resizableMinWidth, wid);
-            el.nativeElement.style.width = newWidth + 'px';
-            this.currentSize =newWidth
-            // this.updatedSize.emit(newWidth);
 
-            // setTimeout(() => {
-            // }, 500)
-
-
-        };
 
         const mouseMoveG = (evt: any) => {
             if (!this.dragging) {
                 return;
             }
-
-            newWidth(evt.clientX - el.nativeElement.offsetLeft);
             evt.stopPropagation();
         };
 
-        const dragMoveG = (evt: any) => {
-            if (!this.dragging) {
-                return;
-            }
-            const newWidth =
-                Math.max(
-                    this.resizableMinWidth,
-                    evt.clientX - el.nativeElement.offsetLeft
-                ) + 'px';
-            el.nativeElement.style.width =
-                evt.clientX - el.nativeElement.offsetLeft + 'px';
-            evt.stopPropagation();
-        };
+
 
         const mouseUpG = (evt: any) => {
-            console.log('mouseUpG');
-            this.updatedSize.emit(this.currentSize);
 
             if (!this.dragging) {
                 return;
@@ -72,10 +50,16 @@ export class ResizableDirective implements OnInit {
             restoreGlobalMouseEvents();
             this.dragging = false;
             evt.stopPropagation();
+            if(this.mousedountclientX >evt.screenX){
+                this.updateSize.emit(-1);
+            }else{
+                this.updateSize.emit(1);
+            }
 
         };
 
         const mouseDown = (evt: any) => {
+            this.mousedountclientX = evt.screenX
             if (this.inDragRegion(evt)) {
                 this.dragging = true;
                 preventGlobalMouseEvents();
@@ -91,48 +75,32 @@ export class ResizableDirective implements OnInit {
             }
         };
 
-        document.addEventListener('mousemove', mouseMoveG, true);
-        document.addEventListener('mouseup', mouseUpG, true);
-        el.nativeElement.addEventListener('mousedown', mouseDown, true);
-        el.nativeElement.addEventListener('mousemove', mouseMove, true);
-        // fromEvent(document, 'mousemove').pipe(
-        //     // skip(120),
-        //     // debounceTime(100),
-        //     // takeUntil(10)
-        // ) .subscribe((ev) => {
-        //     mouseMoveG(ev)
+    
 
-        //     // console.log('mousemove:',ev);
-        //   });
-        //   fromEvent(document, 'mouseup').pipe(
-        //     // debounceTime(1000),
-        //     // skip(10),
+        this.subscription$.add(
+            fromEvent(document, 'mousemove').pipe(
+            ).subscribe((ev) => {
+                mouseMoveG(ev)
+            }),
+        )
+        this.subscription$.add(
+            fromEvent(document, 'mouseup').pipe(
+            ).subscribe((e) => {
+                mouseUpG(e)
+            })
+        )
+        this.subscription$.add(
+            fromEvent(el.nativeElement, 'mousedown').pipe(
+            ).subscribe((e) => {
+                this.currentWidth = el.nativeElement.style.width.slice(0.-2)
+                mouseDown(e)
+            })
+        )
+        this.subscription$.add(fromEvent(el.nativeElement, 'mousemove').pipe(
+        ).subscribe((e) => {
+            mouseMove(e)
 
-        //     map((e) => { mouseUpG(e)})
-        // ) .subscribe((scrollDirection) => {
-        //     // console.log('mouseup:',scrollDirection);
-        //   });
-
-        //   fromEvent(el.nativeElement, 'mousedown').pipe(
-        //     // debounceTime(1000),
-        //     // skip(10),
-
-        //     map((e) => { mouseDown(e)})
-        // ) .subscribe((scrollDirection) => {
-        //     // console.log('mousedown:',scrollDirection);
-        //   });
-
-        //   fromEvent(el.nativeElement, 'mousemove').pipe(
-        //     // debounceTime(100000),
-        //     // skip(100000),
-        //     map((e) => { mouseMove(e)})
-        // ) .subscribe((scrollDirection) => {
-        //     // console.log('mousemove:',scrollDirection);
-        //   });
-
-
-
-
+        }))
     }
 
     ngOnInit(): void {
@@ -140,6 +108,8 @@ export class ResizableDirective implements OnInit {
             this.resizableGrabWidth + 'px solid darkgrey';
 
 
+            this.el.nativeElement.style['border-left'] =
+            this.resizableGrabWidth + 'px solid darkgrey';
     }
 
     inDragRegion(evt: any) {
@@ -150,4 +120,8 @@ export class ResizableDirective implements OnInit {
             this.resizableGrabWidth
         );
     }
+
+    ngOnDestroy(): void {
+		this.subscription$.unsubscribe();
+	}
 }

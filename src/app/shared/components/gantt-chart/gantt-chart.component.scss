@@ -1,4 +1,6 @@
-
+::ng-deep .mat-tooltip {
+  white-space: pre-line; // Allow line break
+}
   .theme-material {
     thead {
       color: rgba(0, 0, 0, 0.54);
@@ -22,7 +24,7 @@
     .timelineWrapper {
       tr,
       .row {
-        
+
         // border-bottom: 1px solid rgba(0, 0, 0, 0.12);
         th:not(:last-child) {
           border-right: 1px solid #e0e0e0;
@@ -115,11 +117,12 @@
       margin-top: 10px;
       white-space: nowrap;
       position: relative;
+      
       // height: 100px;
       th {
         display: inline-block;
         box-sizing: border-box;
-        width: 120px; // 1 minute is 2px
+        // width: 120px; // 1 minute is 2px
         height: 31px;
         padding: 5px;
       }
@@ -143,10 +146,10 @@
         margin: 4px 0;
       }
       span:first-of-type {
-        border-radius: 7px 0 0 7px;
+        // border-radius: 7px 0 0 7px;
       }
       span:last-of-type {
-        border-radius: 0 7px 7px 0;
+        // border-radius: 0 7px 7px 0;
       }
     }
   }

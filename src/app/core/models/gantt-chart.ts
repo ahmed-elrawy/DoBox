@@ -8,6 +8,6 @@ export interface GanntTask {
     isHidden?:boolean;
     active?:boolean;
     width?:number
-    offset?:0
+    offset?:number
     subTasks?: GanntTask[]
     }

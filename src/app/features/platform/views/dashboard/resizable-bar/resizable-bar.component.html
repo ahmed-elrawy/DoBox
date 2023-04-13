@@ -1,0 +1,21 @@
+<table>
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of tasks">
+        <td>{{ task.name }}</td>
+        <td>{{ task.start_date }}</td>
+        <td  resizable  (resizeEnd)="onResizeEnd($event, task)">
+          {{ task.end_date }}
+        </td>
+        <!-- <td>{{ (new Date(task.end_date) - new Date(task.start_date)) / (1000 * 60 * 60 * 24) }} days</td> -->
+      </tr>
+    </tbody>
+  </table>
+  

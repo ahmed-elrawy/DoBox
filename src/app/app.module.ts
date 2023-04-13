@@ -9,6 +9,7 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthService } from './auth/auth.service';
 import { FakeServerInterceptor } from '../assets/fake-server.service';
+import { ResizableModule } from 'angular-resizable-element';
 
 
 //app.module.ts (red-app)
@@ -23,6 +24,7 @@ import { FakeServerInterceptor } from '../assets/fake-server.service';
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
+    ResizableModule
   ],
   bootstrap: [AppComponent],
   providers: [

@@ -11,12 +11,16 @@ import { GanntTask } from '@app/core/models/gantt-chart';
 export class GanttCharComponent  {
  
 
-  @Input() dayStart: any;
-  @Input() dayEnd: any;
+  @Input() dayStart='';
+  @Input() dayEnd='';
+  @Input() beforeStartDay = 3;
+  @Input() afterEndDay = 3;
+  @Input() cellWidth = 120; // 1 day is 120px
   @Input() tasks: GanntTask[]=[];
   dates: string[] = []
-  todayIndex: number =0
-  workingDays: number | undefined;
+  todayIndex=0
+  workingDays=0;
+  todayWidth=0
   line:number=0
 
 
@@ -25,43 +29,56 @@ export class GanttCharComponent  {
   }
 
   prepareChart() {
-    const d1 = new Date('2023-4-1');
-    const d2 = new Date('2023-7-1');
+ 
+    const first = new Date(this.dayStart)
+          first.setMonth( first.getMonth() - this.beforeStartDay)
+          first.toLocaleDateString()
+    const second= new Date(this.dayEnd)
+          second.setMonth( second.getMonth() + this.afterEndDay) 
+          second.toLocaleDateString()
+    const d1 = new Date(this.formateDate([first])[0]);
+    const d2 = new Date(this.formateDate([second])[0]);
+
     this.dates= this.getDatesInRange(d1, d2) 
-    this.todayIndex= (this.dates.indexOf(this.formateDate([new Date()])[0])+1)*120
-    this.line = (this.dates.indexOf(this.formateDate([new Date()])[0])+1)*120 -100
+    this.todayIndex= (this.dates.indexOf(this.formateDate([new Date()])[0])+1)
+    this.todayWidth = this.todayIndex * this.cellWidth
+    this.line = (this.dates.indexOf(this.formateDate([new Date()])[0])+1)*this.cellWidth -100
     this.workingDays = this.dates.length
     this.prepareTasks(this.tasks)
-    for(let task of this.tasks) {
-      this.prepareTasks(task.subTasks)
+    for(let task of this.tasks) { //prepare subTasks
+      this.prepareTasks(task.subTasks as GanntTask[])
     } 
     setTimeout(()=> {
-      document.getElementById("timelineWrapper")!.scrollLeft += (120) *(this.todayIndex/120) -538
+
+      document.getElementById("timelineWrapper")!.scrollLeft += this.todayWidth -538
     },0)
   }
 
-  prepareTasks(data:any) {
-    data.map((task:any) => {
+  prepareTasks(data:GanntTask[]) {
+    
+    data.map((task:GanntTask) => {
+
       let start = this.dates.indexOf(task.start)+1;
       let end = this.dates.indexOf(task.end)+1
-      task.offset = (start* 120 )-120
-      task.width = (end - start +1) * 122 
-      let range = end - (this.todayIndex/120)
-      let width = task.width /120
-      let status = (range /width) *100
-      if(status < 30 ){task.color ='#E1DD40'} 
-      if(status == 0 ){task.color ='#00C48C'} 
-      if(status < 0 ) {task.color ='#FF375E'}
-      if(status > 30) { task.color ='#99E7D1'} 
-      if(status > 30){ task.color ='#99E7D1'} 
-      if(start  > (this.todayIndex/120)){task.color ='#ffffff8'}
+      task.offset = (start* this.cellWidth )-this.cellWidth
+      task.width = (end - start +1) * this.cellWidth 
+      let range = end - (this.todayIndex)
+      let width = task.width /this.cellWidth
+      let status = (range /width) * 100
+
+      if(start  > this.todayIndex){task.color ='#ffffff8'}
+      else if(status > 30 && (end- this.todayIndex >3)) { task.color ='#99E7D1'} 
+      else if(status < 0 ) {task.color ='#FF375E'}
+      else if(status == 0 ){task.color ='#00C48C'} 
+      else if( end - this.todayIndex <3 || status < 30 && end != this.todayIndex){task.color ='#E1DD40'} 
+
     });
   }
   onTaskClick(clickedTask:GanntTask) {
     document.getElementById("timelineWrapper")!.scrollLeft = 0
-    document.getElementById("timelineWrapper")!.scrollLeft += clickedTask.offset||0
+    document.getElementById("timelineWrapper")!.scrollLeft +=(clickedTask.offset as number)
 
-    this.tasks.filter((task:any) => {
+    this.tasks.filter((task:GanntTask) => {
       if (task.id === clickedTask.id) {
         task.isHidden = !task.isHidden;
         clickedTask.active = !clickedTask.active;
@@ -86,10 +103,10 @@ export class GanttCharComponent  {
   
   formateDate(dates: Date[]):Array<string>{
     let shortDates:Array<string> = []
-    dates.forEach(valie => {
-      const year = valie.getFullYear();
-      const month = valie.getMonth() + 1;
-      const day = valie.getDate();
+    dates.forEach(value => {
+      const year = value.getFullYear();
+      const month = value.getMonth() + 1;
+      const day = value.getDate();
       const withSlashes = [year, month, day].join('/');
       shortDates.push(withSlashes)
 
@@ -97,19 +114,37 @@ export class GanttCharComponent  {
     return shortDates
   }
  
-  scroll(s:any){
-    // console.log(s);
-    
+  scroll(s:any){}
+
+  updatedSize(size:any, index:any ,dr:string){
+
+    if(dr=='right'){
+      if(size == 1){
+        (this.tasks[index]['width'] as number ) += this.cellWidth;
+        this.tasks[index]['end'] =  this.incrementDate(this.tasks[index]['end'],1)
+      }else {
+        (this.tasks[index]['width'] as number ) += -this.cellWidth
+        this.tasks[index]['end'] =  this.incrementDate(this.tasks[index]['end'],-1)
+      }
+    }else{
+      if(size == 1){
+        (this.tasks[index]['offset'] as number ) += this.cellWidth;
+        (this.tasks[index]['width'] as number ) -= this.cellWidth; 
+        this.tasks[index]['end'] =  this.incrementDate(this.tasks[index]['end'],-1)
+        this.tasks[index]['start'] =  this.incrementDate(this.tasks[index]['start'],+1)
+      }else {
+        (this.tasks[index]['offset'] as number ) -= this.cellWidth;
+        (this.tasks[index]['width'] as number ) += this.cellWidth;
+        this.tasks[index]['end'] =  this.incrementDate(this.tasks[index]['end'],+1)
+        this.tasks[index]['start'] =  this.incrementDate(this.tasks[index]['start'],-1)
+      }
+    }
+    this.prepareTasks(this.tasks)
   }
 
-  // trigger(log:string){
-  //   console.log(log)
-  // }
-    updatedSize(size:number, index:any){
-      
-      console.log(size/120);
-      
-
-    }
-
+  incrementDate(date:string, inc:number){
+   let  newDate =  this.dates.indexOf(date)+ inc
+   return  this.dates[newDate]
+  }
 }
+

@@ -29,15 +29,11 @@
 
 
           </div>
-          <div 
-            class=""
-            role="region"
-            [style.display]="accordionItem.expanded ? '' : 'none'"
-            [attr.id]="'accordion-body-' + index"
-            [attr.aria-labelledby]="'accordion-header-' + index"
+          <div class="" role="region" [style.display]="accordionItem.expanded ? '' : 'none'"
+            [attr.id]="'accordion-body-' + index" [attr.aria-labelledby]="'accordion-header-' + index"
             *ngFor="let subTask of task.subTasks">
-              <div class="accordion-sub-item">sub task</div>
-            
+            <div class="accordion-sub-item">sub task</div>
+
           </div>
         </cdk-accordion-item>
 
@@ -46,34 +42,32 @@
     </div>
 
   </div>
-  <div id="timelineWrapper" class="timelineWrapper"
-    (scroll)="scrollOne.scrollTop = scrollTwo.scrollTop ;scroll( scrollOne.scrollLeft)" #scrollTwo>
+  <div id="timelineWrapper" class="timelineWrapper" (scroll)="scrollOne.scrollTop = scrollTwo.scrollTop ;
+     scroll( scrollOne.scrollLeft)" #scrollTwo>
     <table class="timeline ">
 
       <thead>
         <tr>
-          <th *ngFor="let item of [].constructor(workingDays); let i = index">
+          <th *ngFor="let item of [].constructor(workingDays); let i = index" [ngStyle]="{width: cellWidth+'px' }">
             {{ dates[i] }}
 
           </th>
         </tr>
       </thead>
-      <tbody >
-        <div class="row" *ngFor="let task of tasks  let i= index" 
-          [ngStyle]="{height: (task.subTasks!.length > 0 && task.isHidden ? (task.subTasks!.length * 30 )+(task.subTasks!.length *6): 30 ) + 'px' }">
-          <div 
-            *ngIf="!task.isHidden; else elseBlock "
-            (click)="onTaskClick(task)"
-             class="taskBar" [matTooltip]="task.label "
-             matTooltipClass="gantt-tooltip"
-            [ngStyle]="{
+      <tbody>
+        <div class="row" *ngFor="let task of tasks  let i= index" [ngStyle]="{
+            height: (task.subTasks!.length > 0 && task.isHidden ? (task.subTasks!.length * 30 )+(task.subTasks!.length *6): 30 ) + 'px' 
+          }">
+          <div *ngIf="!task.isHidden ; else elseBlock " (click)="onTaskClick(task)" class="taskBar d-flex"
+            [matTooltip]="'label: '+ task.label+'\nstart: '+task.start+'\nend: '+ task.end "
+            matTooltipClass="gantt-tooltip" [ngStyle]="{
               left: task.offset + 'px',
               width: task.width + 'px',
               'background-color': task.color
-          }"
-          appResizable     (updatedSize)="updatedSize($event, i)">
+          }" style="justify-content:space-between">
+            <span class="" resize  (updateSize)="updatedSize($event, i, 'left')"></span>
+            <span class="" resize  (updateSize)="updatedSize($event, i,'right')"></span>
           </div>
-          <!-- (newItemEvent)="trigger($event)" -->
           <ng-template #elseBlock>
             <div [ngStyle]="{
               display: 'inline-block',
@@ -81,17 +75,17 @@
               left: task.offset + 'px',
               width: task.width + 'px',
               'background-color': task.color+'33  '
-            }" >
-              <div *ngFor="let subTask of task.subTasks;" class="taskBar" [matTooltip]="subTask.label " 
+            }">
+              <div *ngFor="let subTask of task.subTasks;" class="taskBar"
+                [matTooltip]="'label: '+ subTask.label+'\nstart: '+subTask.start+'\nend: '+ subTask.end "
                 matTooltipClass="gantt-tooltip" [ngStyle]="{
-              left: (subTask.offset||0) - (task.offset||0) + 'px',
-
-              width: subTask.width + 'px',
-              display: 'block',
-              
+                left: (subTask.offset||0) - (task.offset||0) + 'px',
+                width: subTask.width + 'px',
+                display: 'block',
               'background-color': subTask.color
 
-            }"><p>{{subTask.start}} to {{subTask.end}}</p>
+            }">
+                <p>{{subTask.start}} to {{subTask.end}}</p>
               </div>
             </div>
           </ng-template>
