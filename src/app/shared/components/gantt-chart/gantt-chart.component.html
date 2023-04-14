@@ -58,34 +58,43 @@
         <div class="row" *ngFor="let task of tasks  let i= index" [ngStyle]="{
             height: (task.subTasks!.length > 0 && task.isHidden ? (task.subTasks!.length * 30 )+(task.subTasks!.length *6): 30 ) + 'px' 
           }">
-          <div *ngIf="!task.isHidden ; else elseBlock " (click)="onTaskClick(task)" class="taskBar d-flex"
-            [matTooltip]="'label: '+ task.label+'\nstart: '+task.start+'\nend: '+ task.end "
-            matTooltipClass="gantt-tooltip" [ngStyle]="{
+          <div 
+              *ngIf="!task.isHidden ; else elseBlock " 
+              (click)="onTaskClick(task)" 
+              class="taskBar d-flex justify-content-between"
+              [matTooltip]="'label: '+ task.label+'\nstart: '+task.start+'\nend: '+ task.end "
+              matTooltipClass="gantt-tooltip" [ngStyle]="{
               left: task.offset + 'px',
               width: task.width + 'px',
               'background-color': task.color
-          }" style="justify-content:space-between">
+          }" >
             <span class="" resize  (updateSize)="updatedSize($event, i, 'left')"></span>
             <span class="" resize  (updateSize)="updatedSize($event, i,'right')"></span>
           </div>
-          <ng-template #elseBlock>
-            <div [ngStyle]="{
+          <ng-template #elseBlock >
+            <div  
+              (click)="onTaskClick(task)"
+              [ngStyle]="{
               display: 'inline-block',
               position: 'relative',
               left: task.offset + 'px',
               width: task.width + 'px',
               'background-color': task.color+'33  '
             }">
-              <div *ngFor="let subTask of task.subTasks;" class="taskBar"
+              <div *ngFor="let subTask of task.subTasks;let j= index" class="taskBar d-flex justify-content-between  "
                 [matTooltip]="'label: '+ subTask.label+'\nstart: '+subTask.start+'\nend: '+ subTask.end "
                 matTooltipClass="gantt-tooltip" [ngStyle]="{
-                left: (subTask.offset||0) - (task.offset||0) + 'px',
+                left: $any((subTask.offset||0) - (task.offset||0) -5) + 'px',
                 width: subTask.width + 'px',
+               ' margin-left':10+'px',
                 display: 'block',
               'background-color': subTask.color
 
-            }">
-                <p>{{subTask.start}} to {{subTask.end}}</p>
+            }"
+           >
+                <!-- <p>{{subTask.start}} to {{subTask.end}}</p> -->
+                <span class="" resize  (updateSize)="updatedSize($event, i, 'left',j)"></span>
+              <span class="" resize  (updateSize)="updatedSize($event, i,'right',j)"></span>
               </div>
             </div>
           </ng-template>

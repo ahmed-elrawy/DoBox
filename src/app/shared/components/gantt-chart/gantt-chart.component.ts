@@ -61,7 +61,7 @@ export class GanttCharComponent  {
       let start = this.dates.indexOf(task.start)+1;
       let end = this.dates.indexOf(task.end)+1
       task.offset = (start* this.cellWidth )-this.cellWidth
-      task.width = (end - start +1) * this.cellWidth 
+      task.width = ((end - start +1) * this.cellWidth )
       let range = end - (this.todayIndex)
       let width = task.width /this.cellWidth
       let status = (range /width) * 100
@@ -76,7 +76,7 @@ export class GanttCharComponent  {
   }
   onTaskClick(clickedTask:GanntTask) {
     document.getElementById("timelineWrapper")!.scrollLeft = 0
-    document.getElementById("timelineWrapper")!.scrollLeft +=(clickedTask.offset as number)
+    document.getElementById("timelineWrapper")!.scrollLeft += (clickedTask.offset as number)
 
     this.tasks.filter((task:GanntTask) => {
       if (task.id === clickedTask.id) {
@@ -116,35 +116,56 @@ export class GanttCharComponent  {
  
   scroll(s:any){}
 
-  updatedSize(size:any, index:any ,dr:string){
+  updatedSize(size:any, index:any ,dr:string,childIndex?:number){
+    // this.canResize(index)
 
     if(dr=='right'){
+      
       if(size == 1){
-        (this.tasks[index]['width'] as number ) += this.cellWidth;
-        this.tasks[index]['end'] =  this.incrementDate(this.tasks[index]['end'],1)
-      }else {
-        (this.tasks[index]['width'] as number ) += -this.cellWidth
-        this.tasks[index]['end'] =  this.incrementDate(this.tasks[index]['end'],-1)
+         this.getTask(index, childIndex)['width']  += this.cellWidth;
+         this.getTask(index, childIndex)['end'] =  this.incrementDate( this.getTask(index, childIndex)['end'],1)
+      }else if(size == -1 &&  this.getTask(index, childIndex)['width']  >this.cellWidth) {
+        if( !this.canResize(index) && !childIndex) return
+
+        this.getTask(index, childIndex)['width'] += -this.cellWidth
+         this.getTask(index, childIndex)['end']  =  this.incrementDate( this.getTask(index, childIndex)['end'],-1)
       }
     }else{
-      if(size == 1){
-        (this.tasks[index]['offset'] as number ) += this.cellWidth;
-        (this.tasks[index]['width'] as number ) -= this.cellWidth; 
-        this.tasks[index]['end'] =  this.incrementDate(this.tasks[index]['end'],-1)
-        this.tasks[index]['start'] =  this.incrementDate(this.tasks[index]['start'],+1)
-      }else {
-        (this.tasks[index]['offset'] as number ) -= this.cellWidth;
-        (this.tasks[index]['width'] as number ) += this.cellWidth;
-        this.tasks[index]['end'] =  this.incrementDate(this.tasks[index]['end'],+1)
-        this.tasks[index]['start'] =  this.incrementDate(this.tasks[index]['start'],-1)
+      if(size == 1 &&  this.getTask(index,childIndex)['width'] >this.cellWidth){
+        
+         this.getTask(index, childIndex)['offset'] += this.cellWidth;
+         this.getTask(index, childIndex)['width']  -= this.cellWidth; 
+         this.getTask(index, childIndex)['start']  =  this.incrementDate( this.getTask(index, childIndex)['start'],+1)
+      } else if (size == -1){
+         this.getTask(index, childIndex)['offset'] -= this.cellWidth;
+         this.getTask(index, childIndex)['width']  += this.cellWidth;
+         this.getTask(index, childIndex)['start']  =  this.incrementDate( this.getTask(index, childIndex)['start'],-1)
       }
     }
     this.prepareTasks(this.tasks)
   }
 
   incrementDate(date:string, inc:number){
-   let  newDate =  this.dates.indexOf(date)+ inc
+   let  newDate =  this.dates.indexOf(date) + inc
    return  this.dates[newDate]
   }
+
+  getTask(parentIndex:number, childIndex?:number){
+    if( childIndex !=undefined && this.tasks[parentIndex].subTasks){
+      
+      return(this.tasks[parentIndex] as any).subTasks[childIndex] 
+
+    }else {
+      return this.tasks[parentIndex]
+    }
+  }
+
+  canResize( index:number ) {
+    let task= this.tasks[index].subTasks?.filter((e) => (this.dates.indexOf(e.end)+1) > this.dates.indexOf(this.tasks[index].end)) 
+    return  !task?.length   
+     
+  }
+
+
 }
 
